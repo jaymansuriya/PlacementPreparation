@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "737769945678",
+    "project_id": "placement-preparation-46e5f",
+    "storage_bucket": "placement-preparation-46e5f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737769945678:android:e957495228681c865fa11f",
+        "android_client_info": {
+          "package_name": "com.aswdc.placementprep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737769945678-dmoucllr019ukcebg004akqm3647t0lk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aswdc.placementprep",
+            "certificate_hash": "a0fa8f4e2ec07392ef948567549846eab285a042"
+          }
+        },
+        {
+          "client_id": "737769945678-c61lskriv8cc0dkg75u2if8h29fjh144.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2BBqSftAUDL2iH4yvdHAoRUVuysokR7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "737769945678-c61lskriv8cc0dkg75u2if8h29fjh144.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
