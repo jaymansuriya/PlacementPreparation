@@ -4,7 +4,9 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YtPlayer extends StatefulWidget {
   final String url;
-  const YtPlayer({Key? key, required this.url}) : super(key: key);
+  final String topicName;
+  const YtPlayer({Key? key, required this.url, required this.topicName})
+      : super(key: key);
 
   @override
   State<YtPlayer> createState() => _YtPlayerState();
@@ -82,7 +84,7 @@ class _YtPlayerState extends State<YtPlayer> {
                   ),
                   backgroundColor: Colors.deepPurple[400],
                   title: Text(
-                    "Aptitude",
+                    widget.topicName,
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,

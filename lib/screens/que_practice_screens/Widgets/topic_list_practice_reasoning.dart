@@ -27,13 +27,13 @@ class _topicListPracticeReasoningState
   Widget build(BuildContext context) {
     const options = LiveOptions(
       // Start animation after (default zero)
-      delay: Duration(milliseconds: 50),
+      delay: Duration(milliseconds: 10),
 
       // Show each item through (default 250)
-      showItemInterval: Duration(milliseconds: 50),
+      showItemInterval: Duration(milliseconds: 10),
 
       // Animation duration (default 250)
-      showItemDuration: Duration(milliseconds: 300),
+      showItemDuration: Duration(milliseconds: 100),
 
       // Animations starts at 0.05 visible
       // item fraction in sight (default 0.025)

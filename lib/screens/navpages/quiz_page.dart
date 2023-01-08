@@ -48,7 +48,7 @@ class QuizPage extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Let's generate a test !",
+                          "Let's give a test !",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,

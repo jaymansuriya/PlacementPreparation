@@ -8,14 +8,15 @@ import 'package:placementprep/screens/videos_screens/home_video_page.dart';
 import 'package:placementprep/utils/colors.dart';
 
 class RoutePage extends StatefulWidget {
-  const RoutePage({Key? key}) : super(key: key);
+  final int currentIndex;
+  const RoutePage({Key? key, required this.currentIndex}) : super(key: key);
 
   @override
   State<RoutePage> createState() => _RoutePageState();
 }
 
 class _RoutePageState extends State<RoutePage> {
-  int currentIndex = 0;
+  late int currentIndex = widget.currentIndex;
   List<Widget> pages = [
     VideoPage(),
     StudyMaterialPage(),

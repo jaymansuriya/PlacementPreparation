@@ -95,7 +95,7 @@ class _GetStartedState extends State<GetStarted> {
                     SizedBox(height: 20.0),
                     Divider(color: Colors.black38),
                     Text(
-                      "Grasp concepts easily and \nbecome a happy lerner!",
+                      "Grasp concepts easily and \nbecome a happy learner!",
                       style: TextStyle(
                           color: Color(0xFFA1B6CC),
                           fontWeight: FontWeight.w400,

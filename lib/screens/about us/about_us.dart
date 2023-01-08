@@ -50,12 +50,12 @@ class AboutUs extends StatelessWidget {
                         ),
                       ),
                       Align(
-                          alignment: Alignment.center,
-                          child: Image.network(
-                            "https://miro.medium.com/max/320/0*ObJbOfJnx4QIPUq9.png",
-                            scale: 4.5,
-                            fit: BoxFit.cover,
-                          )),
+                        alignment: Alignment.center,
+                        child: CircleAvatar(
+                          radius: 40, // Image radius
+                          backgroundImage: AssetImage("assets/images/logo.png"),
+                        ),
+                      ),
                     ],
                   ),
                   Text(
@@ -144,7 +144,7 @@ class AboutUs extends StatelessWidget {
                             Expanded(
                               flex: 5,
                               child: Text(
-                                "Prof. Krunal Vyas, Computer Enngineering Department",
+                                "Prof. Krunal Vyas, Computer Engineering Department",
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.blueGrey,
@@ -178,7 +178,7 @@ class AboutUs extends StatelessWidget {
                             Expanded(
                               flex: 5,
                               child: Text(
-                                "ASWDC, Computer Enngineering Department",
+                                "ASWDC, Computer Engineering Department",
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.blueGrey,
@@ -212,7 +212,7 @@ class AboutUs extends StatelessWidget {
                             Expanded(
                               flex: 5,
                               child: Text(
-                                "Darshan Institute of Enngineering & Technology, Rajkot, Gujarat - INDIA",
+                                "Darshan Institute of Engineering & Technology, Rajkot, Gujarat - INDIA",
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.blueGrey,
@@ -255,8 +255,8 @@ class AboutUs extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Image.network(
-                              "https://www.darshan.ac.in/U01/Page/1---05-06-2021-09-24-17.png",
+                            Image.asset(
+                              "assets/images/ASWDC.png",
                               scale: 10,
                             ),
                             Image.asset(
@@ -270,6 +270,7 @@ class AboutUs extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
+                          textAlign: TextAlign.justify,
                           "ASWDC is Application, Software and Website Development Center @ Darshan Engineering College run by Students and Staff of Computer Engineering Department.",
                           style: TextStyle(fontSize: 11),
                         ),
@@ -277,6 +278,7 @@ class AboutUs extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
+                          textAlign: TextAlign.justify,
                           "Sole purpose of ASWDC is to bridge gap between university curriculum & industry demands. Students learn cutting edge technologies, develop real world application & experiences professional environment @ ASWDC under guidance of industry experts & faculty members.",
                           style: TextStyle(fontSize: 11),
                         ),

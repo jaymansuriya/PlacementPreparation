@@ -18,20 +18,20 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
-    double percentage = (widget.score / 30) * 100;
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          color: Colors.white,
-          child: Stack(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+        backgroundColor: Colors.white,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Container(
+                color: Colors.white,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    if (percentage >= 75) ...[
+                    if (widget.score >= 23) ...[
                       Container(
                         width: double.infinity,
                         child: Text(
@@ -44,7 +44,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           ),
                         ),
                       ),
-                    ] else if (percentage >= 50 && percentage < 75) ...[
+                    ] else if (widget.score >= 15 && widget.score < 23) ...[
                       SizedBox(
                         width: double.infinity,
                         child: Text(
@@ -74,12 +74,12 @@ class _ResultScreenState extends State<ResultScreen> {
                     SizedBox(
                       height: 30,
                     ),
-                    if (percentage >= 75) ...[
+                    if (widget.score >= 23) ...[
                       Image.network(
                         "https://firebasestorage.googleapis.com/v0/b/placement-preparation-46e5f.appspot.com/o/Image%20used%20in%20app%2FResult%2Fgood1.jpeg?alt=media&token=4e882c0d-4c15-42be-b467-b4ba32e5dad5",
                         height: 180,
                       ),
-                    ] else if (percentage >= 50 && percentage < 75) ...[
+                    ] else if (widget.score >= 15 && widget.score < 23) ...[
                       Image.network(
                         "https://firebasestorage.googleapis.com/v0/b/placement-preparation-46e5f.appspot.com/o/Image%20used%20in%20app%2FResult%2Fmed1.jpeg?alt=media&token=426ddf4c-5738-4c30-a57a-71f5519b0ca8",
                         height: 180,
@@ -92,9 +92,9 @@ class _ResultScreenState extends State<ResultScreen> {
                     SizedBox(
                       height: 45.0,
                     ),
-                    Center(
+                    const Center(
                       child: Text(
-                        "You got",
+                        "Your Score",
                         style: TextStyle(
                             color: kPrimaryBackgroundColor, fontSize: 28.0),
                       ),
@@ -108,37 +108,32 @@ class _ResultScreenState extends State<ResultScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "${percentage.toStringAsFixed(1)}",
+                          "${widget.score}/30",
                           style: TextStyle(
                             color: kPrimaryBackgroundColor,
-                            fontSize: 60.0,
+                            fontSize: 50.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 5),
-                          child: Text(
-                            "%",
-                            style: TextStyle(
-                              color: kPrimaryBackgroundColor,
-                              fontSize: 35.0,
-
-                              //fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
                       ],
                     ),
                     SizedBox(
-                      height: 100.0,
+                      height: 50.0,
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushReplacement(
-                            context,
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => RoutePage(
+                        //         currentIndex: 3,
+                        //       ),
+                        //     ));
+                        Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
-                              builder: (context) => RoutePage(),
-                            ));
+                                builder: (context) =>
+                                    const RoutePage(currentIndex: 3)),
+                            (route) => false);
                       },
                       child: Container(
                         width: 140,
@@ -176,7 +171,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   ],
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:auto_animated/auto_animated.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:placementprep/screens/videos_screens/ytplayer.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -104,12 +105,40 @@ Widget buildAnimatedItem(
         // Paste you Widget
         child: InkWell(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => YtPlayer(
-                          url: chlistYTUrl[index],
-                        )));
+            AwesomeDialog(
+              context: context,
+              animType: AnimType.SCALE,
+              dialogType: DialogType.INFO_REVERSED,
+              body: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      "These lectures are available in Gujarati Language.",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      "English/Hindi lecture will be available soon!",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                  ],
+                ),
+              ),
+              btnOkOnPress: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => YtPlayer(
+                              url: chlistYTUrl[index],
+                              topicName: chlist[index],
+                            )));
+              },
+            ).show();
           },
           child: SizedBox(
             width: 300,

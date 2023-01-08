@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:placementprep/models/practice_questions/PracticeQuestion.dart';
@@ -53,6 +54,7 @@ class _PracticeQuizScreenState extends State<PracticeQuizScreen>
     _controller = PageController(initialPage: 0);
   }
 
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -134,285 +136,199 @@ class _PracticeQuizScreenState extends State<PracticeQuizScreen>
                                   ),
                                 ],
                               ),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.only(
-                                          left: 20, top: 25, bottom: 5),
-                                      width: double.infinity,
-                                      child: Text(
-                                        "Question ${index + 1}/${practiceQuestionList.length}",
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20.0,
+                              child: ListView(
+                                controller: _scrollController,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        left: 20, top: 25, bottom: 5),
+                                    width: double.infinity,
+                                    child: Text(
+                                      "Question ${index + 1}/${practiceQuestionList.length}",
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20.0,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 20, right: 20),
+                                    child: Divider(
+                                      color: kPrimaryBackgroundColor,
+                                      thickness: 1.5,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.only(
+                                        left: 20,
+                                        right: 20,
+                                        top: 20,
+                                        bottom: 40),
+                                    margin: EdgeInsets.only(
+                                        top: 30,
+                                        left: 20,
+                                        bottom: 20,
+                                        right: 20),
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color:
+                                              Color.fromRGBO(107, 82, 200, 0.5),
+                                          offset: Offset(1.0, 5.0), //(x,y)
+                                          blurRadius: 10.0,
                                         ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 20, right: 20),
-                                      child: Divider(
-                                        color: kPrimaryBackgroundColor,
-                                        thickness: 1.5,
-                                      ),
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      padding: EdgeInsets.only(
-                                          left: 20,
-                                          right: 20,
-                                          top: 20,
-                                          bottom: 40),
-                                      margin: EdgeInsets.only(
-                                          top: 30,
-                                          left: 20,
-                                          bottom: 20,
-                                          right: 20),
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color.fromRGBO(
-                                                107, 82, 200, 0.5),
-                                            offset: Offset(1.0, 5.0), //(x,y)
-                                            blurRadius: 10.0,
-                                          ),
+                                      ],
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          Color.fromRGBO(107, 82, 200, .7),
+                                          Color.fromRGBO(107, 82, 200, .9),
                                         ],
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            Color.fromRGBO(107, 82, 200, .7),
-                                            Color.fromRGBO(107, 82, 200, .9),
-                                          ],
-                                        ),
-                                        borderRadius: BorderRadius.circular(20),
                                       ),
-                                      child: Text(
-                                        question.question.toString(),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600),
-                                      ),
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
-                                    SizedBox(
-                                      height: 20,
+                                    child: Text(
+                                      question.question.toString(),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
                                     ),
-                                    PracticeOptionWidget(
-                                      question: question,
-                                      onClickedOption: (option) {
-                                        if (question.isLocked ?? false) {
-                                          return;
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  PracticeOptionWidget(
+                                    question: question,
+                                    onClickedOption: (option) {
+                                      if (question.isLocked ?? false) {
+                                        return;
+                                      } else {
+                                        setState(() {
+                                          question.isLocked = true;
+                                          question.selectedOption = option;
+                                        });
+                                        isLocked = question.isLocked;
+                                        if (parseBool(question
+                                            .selectedOption!.isCorrect
+                                            .toString())) {
+                                          score++;
                                         } else {
                                           setState(() {
-                                            question.isLocked = true;
-                                            question.selectedOption = option;
-                                          });
-                                          isLocked = question.isLocked;
-                                          if (parseBool(question
-                                              .selectedOption!.isCorrect
-                                              .toString())) {
-                                            score++;
-                                          } else {
-                                            setState(() {
-                                              Future.delayed(
-                                                  Duration(seconds: 1), () {
-                                                question.isLocked = false;
-                                              });
+                                            Future.delayed(Duration(seconds: 1),
+                                                () {
+                                              question.isLocked = false;
                                             });
-                                          }
+                                          });
                                         }
-                                      },
-                                    ),
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        ishide
-                                            ? InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    ishide = !ishide;
-                                                  });
-                                                },
-                                                child: Container(
-                                                  width: 140,
-                                                  margin:
-                                                      EdgeInsets.only(left: 10),
-                                                  padding: EdgeInsets.only(
-                                                      left: 10,
-                                                      right: 10,
-                                                      top: 12,
-                                                      bottom: 12),
-                                                  decoration: BoxDecoration(
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Color.fromRGBO(
-                                                            75, 93, 86, 0.5),
-                                                        offset: Offset(
-                                                            1.0, 5.0), //(x,y)
-                                                        blurRadius: 10.0,
-                                                      ),
-                                                    ],
-                                                    gradient: LinearGradient(
-                                                      begin:
-                                                          Alignment.topCenter,
-                                                      end: Alignment
-                                                          .bottomCenter,
-                                                      colors: [
-                                                        Colors.black
-                                                            .withOpacity(.4),
-                                                        Colors.black
-                                                            .withOpacity(0.7)
-                                                      ],
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Flexible(
-                                                        child: Text(
-                                                          "Hide Answer",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 12),
-                                                        ),
-                                                      ),
-                                                      Icon(
-                                                          Icons
-                                                              .arrow_drop_up_rounded,
-                                                          color: Colors.white,
-                                                          size: 20)
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            : InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    ishide = !ishide;
-                                                  });
-                                                },
-                                                child: Container(
-                                                  width: 140,
-                                                  margin:
-                                                      EdgeInsets.only(left: 10),
-                                                  padding: EdgeInsets.only(
-                                                      left: 10,
-                                                      right: 10,
-                                                      top: 12,
-                                                      bottom: 12),
-                                                  decoration: BoxDecoration(
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Color.fromRGBO(
-                                                            44, 154, 109, 0.5),
-                                                        offset: Offset(
-                                                            1.0, 5.0), //(x,y)
-                                                        blurRadius: 10.0,
-                                                      ),
-                                                    ],
-                                                    gradient: LinearGradient(
-                                                      begin:
-                                                          Alignment.topCenter,
-                                                      end: Alignment
-                                                          .bottomCenter,
-                                                      colors: [
-                                                        Color.fromRGBO(
-                                                            44, 154, 109, 0.5),
-                                                        Color.fromRGBO(
-                                                            44, 154, 109, 0.9),
-                                                      ],
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Flexible(
-                                                        child: Text(
-                                                          "Show Answer",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 12),
-                                                        ),
-                                                      ),
-                                                      Icon(
-                                                          Icons
-                                                              .arrow_drop_down_rounded,
-                                                          color: Colors.white,
-                                                          size: 20)
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                        InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                if (ishide = true) {
-                                                  ishide = false;
-                                                }
-                                              });
-                                              if (questionNumber <
-                                                  practiceQuestionList.length) {
-                                                _controller!.nextPage(
-                                                    duration: const Duration(
-                                                        milliseconds: 250),
-                                                    curve: Curves.easeInExpo);
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ishide
+                                          ? InkWell(
+                                              onTap: () {
                                                 setState(() {
-                                                  questionNumber++;
-                                                  Future.delayed(
-                                                      Duration(seconds: 1), () {
-                                                    question.isLocked = false;
-                                                  });
+                                                  ishide = !ishide;
                                                 });
-                                              } else {
-                                                setState(() {
-                                                  Future.delayed(
-                                                      Duration(seconds: 1), () {
-                                                    question.isLocked = false;
-                                                  });
-                                                });
-                                                Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        RoutePage(),
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                            child: Container(
-                                              margin: EdgeInsets.only(
-                                                  top: 20, bottom: 20),
-                                              padding: EdgeInsets.all(10),
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.35,
-                                              decoration: BoxDecoration(
+                                              },
+                                              child: Container(
+                                                width: 140,
+                                                margin:
+                                                    EdgeInsets.only(left: 10),
+                                                padding: EdgeInsets.only(
+                                                    left: 10,
+                                                    right: 10,
+                                                    top: 12,
+                                                    bottom: 12),
+                                                decoration: BoxDecoration(
                                                   boxShadow: [
                                                     BoxShadow(
                                                       color: Color.fromRGBO(
-                                                          107, 82, 200, 0.5),
+                                                          75, 93, 86, 0.5),
+                                                      offset: Offset(
+                                                          1.0, 5.0), //(x,y)
+                                                      blurRadius: 10.0,
+                                                    ),
+                                                  ],
+                                                  gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                    colors: [
+                                                      Colors.black
+                                                          .withOpacity(.4),
+                                                      Colors.black
+                                                          .withOpacity(0.7)
+                                                    ],
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Text(
+                                                        "Hide Answer",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 12),
+                                                      ),
+                                                    ),
+                                                    Icon(
+                                                        Icons
+                                                            .arrow_drop_up_rounded,
+                                                        color: Colors.white,
+                                                        size: 20)
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                          : InkWell(
+                                              onTap: () {
+                                                question.isLocked = true;
+                                                Future.delayed(const Duration(
+                                                    milliseconds: 2500));
+                                                SchedulerBinding.instance
+                                                    .addPostFrameCallback((_) {
+                                                  _scrollController.animateTo(
+                                                      _scrollController.position
+                                                          .maxScrollExtent,
+                                                      duration: Duration(
+                                                          milliseconds: 1200),
+                                                      curve:
+                                                          Curves.fastOutSlowIn);
+                                                });
+                                                setState(() {
+                                                  ishide = !ishide;
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 140,
+                                                margin:
+                                                    EdgeInsets.only(left: 10),
+                                                padding: EdgeInsets.only(
+                                                    left: 10,
+                                                    right: 10,
+                                                    top: 12,
+                                                    bottom: 12),
+                                                decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Color.fromRGBO(
+                                                          44, 154, 109, 0.5),
                                                       offset: Offset(
                                                           1.0, 5.0), //(x,y)
                                                       blurRadius: 10.0,
@@ -423,51 +339,147 @@ class _PracticeQuizScreenState extends State<PracticeQuizScreen>
                                                     end: Alignment.bottomCenter,
                                                     colors: [
                                                       Color.fromRGBO(
-                                                          107, 82, 200, .7),
+                                                          44, 154, 109, 0.5),
                                                       Color.fromRGBO(
-                                                          107, 82, 200, .9),
+                                                          44, 154, 109, 0.9),
                                                     ],
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          30)),
-                                              child: Center(
-                                                  child: Text(
-                                                index + 1 <
-                                                        practiceQuestionList
-                                                            .length
-                                                    ? "Next"
-                                                    : "Home!",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  letterSpacing: 1,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w800,
+                                                      BorderRadius.circular(20),
                                                 ),
-                                              )),
-                                            ))
-                                      ],
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Text(
+                                                        "Show Answer",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 12),
+                                                      ),
+                                                    ),
+                                                    Icon(
+                                                        Icons
+                                                            .arrow_drop_down_rounded,
+                                                        color: Colors.white,
+                                                        size: 20)
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                      InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              if (ishide = true) {
+                                                ishide = false;
+                                              }
+                                            });
+                                            if (questionNumber <
+                                                practiceQuestionList.length) {
+                                              _controller!.nextPage(
+                                                  duration: const Duration(
+                                                      milliseconds: 250),
+                                                  curve: Curves.easeInExpo);
+                                              setState(() {
+                                                questionNumber++;
+                                                Future.delayed(
+                                                    Duration(seconds: 1), () {
+                                                  question.isLocked = false;
+                                                });
+                                              });
+                                            } else {
+                                              setState(() {
+                                                Future.delayed(
+                                                    Duration(seconds: 1), () {
+                                                  question.isLocked = false;
+                                                });
+                                              });
+                                              // Navigator.pushReplacement(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //     builder: (context) =>
+                                              //         RoutePage(
+                                              //       currentIndex: 2,
+                                              //     ),
+                                              //   ),
+                                              // );
+                                              Navigator.of(context)
+                                                  .pushAndRemoveUntil(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const RoutePage(
+                                                                  currentIndex:
+                                                                      2)),
+                                                      (route) => false);
+                                            }
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                top: 20, bottom: 20),
+                                            padding: EdgeInsets.all(10),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.35,
+                                            decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Color.fromRGBO(
+                                                        107, 82, 200, 0.5),
+                                                    offset: Offset(
+                                                        1.0, 5.0), //(x,y)
+                                                    blurRadius: 10.0,
+                                                  ),
+                                                ],
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: [
+                                                    Color.fromRGBO(
+                                                        107, 82, 200, .7),
+                                                    Color.fromRGBO(
+                                                        107, 82, 200, .9),
+                                                  ],
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(30)),
+                                            child: Center(
+                                                child: Text(
+                                              index + 1 <
+                                                      practiceQuestionList
+                                                          .length
+                                                  ? "Next"
+                                                  : "Finish!",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                letterSpacing: 1,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                            )),
+                                          ))
+                                    ],
+                                  ),
+                                  AnimatedOpacity(
+                                    opacity: ishide ? 1.0 : 0.0,
+                                    duration: const Duration(milliseconds: 500),
+                                    child: Visibility(
+                                      visible: ishide,
+                                      child: Container(
+                                          padding: EdgeInsets.only(
+                                              top: 30,
+                                              left: 20,
+                                              right: 10,
+                                              bottom: 20),
+                                          child: Image.network(
+                                              practiceQuestionList[index]
+                                                  .solutionImageUrl
+                                                  .toString())),
                                     ),
-                                    AnimatedOpacity(
-                                      opacity: ishide ? 1.0 : 0.0,
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      child: Visibility(
-                                        visible: ishide,
-                                        child: Container(
-                                            padding: EdgeInsets.only(
-                                                top: 30,
-                                                left: 20,
-                                                right: 10,
-                                                bottom: 20),
-                                            child: Image.network(
-                                                practiceQuestionList[index]
-                                                    .solutionImageUrl
-                                                    .toString())),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             );
                           },

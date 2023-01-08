@@ -41,13 +41,13 @@ class _topicListState extends State<topicList> {
   Widget build(BuildContext context) {
     const options = LiveOptions(
       // Start animation after (default zero)
-      delay: Duration(milliseconds: 50),
+      delay: Duration(milliseconds: 10),
 
       // Show each item through (default 250)
-      showItemInterval: Duration(milliseconds: 100),
+      showItemInterval: Duration(milliseconds: 10),
 
       // Animation duration (default 250)
-      showItemDuration: Duration(milliseconds: 500),
+      showItemDuration: Duration(milliseconds: 100),
 
       // Animations starts at 0.05 visible
       // item fraction in sight (default 0.025)
@@ -205,7 +205,7 @@ Widget buildAnimatedItem(
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        "English lecture will be available soon!",
+                                        "English/Hindi lecture will be available soon!",
                                         style: TextStyle(fontSize: 16),
                                       ),
                                       SizedBox(
@@ -221,6 +221,9 @@ Widget buildAnimatedItem(
                                       builder: (context) => YtPlayer(
                                         url: chapterList[index]
                                             .videoUrl
+                                            .toString(),
+                                        topicName: chapterList[index]
+                                            .chapterName
                                             .toString(),
                                       ),
                                     ),

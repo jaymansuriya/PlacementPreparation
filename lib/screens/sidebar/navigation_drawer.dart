@@ -71,12 +71,23 @@ class NavigationDrawer extends StatelessWidget {
               child: ListTile(
                 //leading: Icon(Icons.call_rounded),
                 title: Text(
-                  'Call here : Prof. Krunal Vyas',
+                  'Call',
                   style: TextStyle(fontSize: 12),
                 ),
-                subtitle: Text(
-                  "+91 96019 01005",
-                  style: TextStyle(fontSize: 10),
+                subtitle: Row(
+                  children: [
+                    Icon(
+                      Icons.call,
+                      size: 10,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      "+91 96019 01005",
+                      style: TextStyle(fontSize: 10),
+                    ),
+                  ],
                 ),
                 //onTap: () => null,
               ),
@@ -89,12 +100,23 @@ class NavigationDrawer extends StatelessWidget {
               child: ListTile(
                 //leading: Icon(Icons.person),
                 title: Text(
-                  'Mail here',
+                  'Mail',
                   style: TextStyle(fontSize: 12),
                 ),
-                subtitle: Text(
-                  "krunal.vyas@darshan.ac.in",
-                  style: TextStyle(fontSize: 10),
+                subtitle: Row(
+                  children: [
+                    Icon(
+                      Icons.email_outlined,
+                      size: 10,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      "krunal.vyas@darshan.ac.in",
+                      style: TextStyle(fontSize: 10),
+                    ),
+                  ],
                 ),
                 //onTap: () => null,
               ),
@@ -140,8 +162,8 @@ class NavigationDrawer extends StatelessWidget {
               onTap: () => null,
             ),
             ListTile(
-              leading: Image.network(
-                "https://firebasestorage.googleapis.com/v0/b/placement-preparation-46e5f.appspot.com/o/Image%20used%20in%20app%2Fdevloper.png?alt=media&token=4304289f-ced7-4129-bdf4-6834b7459872",
+              leading: Image.asset(
+                "assets/images/about.png",
                 scale: 16,
                 color: kPrimaryBackgroundColor,
               ),

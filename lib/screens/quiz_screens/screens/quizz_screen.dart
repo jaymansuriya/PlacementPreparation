@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:placementprep/main.dart';
 import 'package:placementprep/models/test_questions/TestQuestion.dart';
+import 'package:placementprep/screens/navpages/route_page.dart';
 import 'package:placementprep/screens/quiz_screens/Widgets/optionwidget.dart';
 import 'package:placementprep/screens/quiz_screens/screens/result_screen.dart';
 import 'package:placementprep/utils/colors.dart';
@@ -48,7 +50,7 @@ class _QuizScreenState extends State<QuizScreen>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: showExitPopup,
       child: SafeArea(
         child: Scaffold(
           body: Container(
@@ -275,12 +277,67 @@ class _QuizScreenState extends State<QuizScreen>
                     ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: () {
+                        showExitPopup();
+                      },
+                      child: Icon(
+                        Icons.exit_to_app_outlined,
+                        color: kPrimaryBackgroundColor,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<bool> showExitPopup() async {
+    return await AwesomeDialog(
+          context: context,
+          animType: AnimType.SCALE,
+          dialogType: DialogType.WARNING,
+          body: Padding(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  "Are you sure you want to quit the test?",
+                  style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+              ],
+            ),
+          ),
+          btnCancelOnPress: () {},
+          btnOkOnPress: () {
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => const RoutePage(
+            //       currentIndex: 3,
+            //     ),
+            //   ),
+            // );
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => const RoutePage(currentIndex: 3)),
+                (route) => false);
+            true;
+          },
+        ).show() ??
+        false;
   }
 
   List<TestQuestion> testQuestionList = [];

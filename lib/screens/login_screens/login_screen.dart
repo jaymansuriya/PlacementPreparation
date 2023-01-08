@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:placementprep/resources/auth_methods.dart';
+import 'package:placementprep/screens/navpages/route_page.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -67,7 +68,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     bool res = await _authMethods.signInWithGoogle(context);
                     //Navigator.pushNamed(context, '/home');
                     if (res) {
-                      Navigator.pushNamed(context, '/home');
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RoutePage(
+                            currentIndex: 0,
+                          ),
+                        ),
+                      );
                     }
                   },
                   color: Colors.deepPurple,

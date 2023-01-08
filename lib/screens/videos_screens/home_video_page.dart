@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:placementprep/main.dart';
 import 'package:placementprep/models/courses/Course.dart';
 import 'package:placementprep/resources/auth_methods.dart';
@@ -16,6 +15,8 @@ import 'package:placementprep/screens/videos_screens/video_list.dart';
 import 'package:placementprep/utils/colors.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
+
+import 'Widgets/lodingWidget.dart';
 
 class VideoPage extends StatefulWidget {
   const VideoPage({Key? key}) : super(key: key);
@@ -100,13 +101,7 @@ class _VideoPageState extends State<VideoPage> {
                               future: getCourseApi(),
                               builder: (context, snapshot) {
                                 if (!snapshot.hasData) {
-                                  return Center(
-                                    child: LoadingAnimationWidget
-                                        .staggeredDotsWave(
-                                      color: kPrimaryBackgroundColor,
-                                      size: 50,
-                                    ),
-                                  );
+                                  return Center(child: LodingWidget());
                                 } else {
                                   return Column(
                                     children: [
@@ -308,7 +303,7 @@ class _VideoPageState extends State<VideoPage> {
                                                 child: SizedBox(
                                                   height: 136,
                                                   // our image take 200 width, thats why we set out total width - 200
-                                                  width: size.width - 220,
+                                                  width: size.width - 205,
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
@@ -441,7 +436,7 @@ class _VideoPageState extends State<VideoPage> {
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: 15, top: 5),
                   child: Text(
                     "Hello! " +
                         AuthMethods().user.displayName.toString() +
@@ -458,7 +453,7 @@ class _VideoPageState extends State<VideoPage> {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    "Welcome back",
+                    "Welcome",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
