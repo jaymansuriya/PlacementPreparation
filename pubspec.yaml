@@ -78,7 +78,14 @@ dev_dependencies:
   flutter_native_splash: ^2.2.16
 
 flutter_native_splash:
-  image: assets/images/splash.png
+  background_image: assets/images/splash.png
+  background_image_dark: assets/images/splash.png
+
+
+
+
+
+
 
 
 
