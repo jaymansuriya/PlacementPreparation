@@ -1,4 +1,4 @@
-package com.example.placementprep
+package com.aswdc.placement_preparation
 
 import io.flutter.embedding.android.FlutterActivity
 
