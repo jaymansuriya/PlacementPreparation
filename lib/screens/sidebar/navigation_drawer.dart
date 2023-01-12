@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:placementprep/resources/auth_methods.dart';
 import 'package:placementprep/screens/about%20us/about_us.dart';
 import 'package:placementprep/screens/login_screens/get_started.dart';
@@ -8,6 +9,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
+
+  Future<void> share() async {
+    await FlutterShare.share(
+      title: 'Placement Preparation',
+      text:
+          """Want to ace your interview process? The "Placement Preparation" app is your ultimate solution. Our comprehensive curriculum ranges from beginner to advanced level, catering to users of all skill levels. Enhance your skills with our diverse practice questions, video lectures, and reading materials. And with our test feature, you'll be fully prepared for your next interview. Download "Placement Preparation" now and start preparing for your dream job!""",
+      linkUrl:
+          'https://play.google.com/store/apps/details?id=com.aswdc.placementpreparation',
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +70,7 @@ class NavigationDrawer extends StatelessWidget {
               //leading: Icon(Icons.question_mark_rounded),
               title: Text(
                 'Do you have any query?',
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
               ),
 
               //onTap: () => null,
@@ -71,8 +82,8 @@ class NavigationDrawer extends StatelessWidget {
               child: ListTile(
                 //leading: Icon(Icons.call_rounded),
                 title: Text(
-                  'Call',
-                  style: TextStyle(fontSize: 12),
+                  'Call : Prof. Krunal Vyas',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                 ),
                 subtitle: Row(
                   children: [
@@ -100,8 +111,8 @@ class NavigationDrawer extends StatelessWidget {
               child: ListTile(
                 //leading: Icon(Icons.person),
                 title: Text(
-                  'Mail',
-                  style: TextStyle(fontSize: 12),
+                  'Mail :',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                 ),
                 subtitle: Row(
                   children: [
@@ -134,7 +145,7 @@ class NavigationDrawer extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 14),
               ),
-              onTap: () => null,
+              onTap: () => share(),
             ),
             ListTile(
               leading: Icon(Icons.browser_updated_rounded),
@@ -145,7 +156,8 @@ class NavigationDrawer extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Colors.grey.shade600),
               ),
-              onTap: () => null,
+              onTap: () => launch(
+                  'https://play.google.com/store/apps/details?id=com.aswdc.placementpreparation&hl=en&gl=US'),
             ),
             ListTile(
               leading: Icon(
@@ -159,7 +171,8 @@ class NavigationDrawer extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 14),
               ),
-              onTap: () => null,
+              onTap: () => launch(
+                  'https://play.google.com/store/apps/details?id=com.aswdc.placementpreparation&hl=en&gl=US'),
             ),
             ListTile(
               leading: Image.asset(

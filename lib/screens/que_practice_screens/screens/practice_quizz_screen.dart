@@ -123,6 +123,10 @@ class _PracticeQuizScreenState extends State<PracticeQuizScreen>
                           itemCount: practiceQuestionList.length,
                           itemBuilder: (context, index) {
                             final question = practiceQuestionList[index];
+                            var _image = NetworkImage(
+                                practiceQuestionList[index]
+                                    .solutionImageUrl
+                                    .toString());
                             indexOfRemove = index;
                             return Container(
                               margin: EdgeInsets.all(10),
@@ -299,18 +303,34 @@ class _PracticeQuizScreenState extends State<PracticeQuizScreen>
                                           : InkWell(
                                               onTap: () {
                                                 question.isLocked = true;
-                                                Future.delayed(const Duration(
-                                                    milliseconds: 2500));
-                                                SchedulerBinding.instance
-                                                    .addPostFrameCallback((_) {
-                                                  _scrollController.animateTo(
-                                                      _scrollController.position
-                                                          .maxScrollExtent,
-                                                      duration: Duration(
-                                                          milliseconds: 1200),
-                                                      curve:
-                                                          Curves.fastOutSlowIn);
-                                                });
+
+                                                _image
+                                                    .resolve(
+                                                        ImageConfiguration())
+                                                    .addListener(
+                                                  ImageStreamListener(
+                                                    (info, call) {
+                                                      print(
+                                                          'Networkimage is fully loaded and saved');
+
+                                                      // do something
+                                                      SchedulerBinding.instance
+                                                          .addPostFrameCallback(
+                                                              (_) {
+                                                        _scrollController.animateTo(
+                                                            _scrollController
+                                                                .position
+                                                                .maxScrollExtent,
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    1200),
+                                                            curve: Curves
+                                                                .fastOutSlowIn);
+                                                      });
+                                                    },
+                                                  ),
+                                                );
+
                                                 setState(() {
                                                   ishide = !ishide;
                                                 });
@@ -468,15 +488,23 @@ class _PracticeQuizScreenState extends State<PracticeQuizScreen>
                                     child: Visibility(
                                       visible: ishide,
                                       child: Container(
-                                          padding: EdgeInsets.only(
-                                              top: 30,
-                                              left: 20,
-                                              right: 10,
-                                              bottom: 20),
+                                        padding: EdgeInsets.only(
+                                            top: 30,
+                                            left: 20,
+                                            right: 10,
+                                            bottom: 20),
+                                        child: Container(
                                           child: Image.network(
                                               practiceQuestionList[index]
                                                   .solutionImageUrl
-                                                  .toString())),
+                                                  .toString()),
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: _image)),
+                                        ),
+                                      ),
+                                      // Image.network(_image.toString())),
                                     ),
                                   ),
                                 ],

@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.placementprep">
+    package="com.aswdc.placementpreparation">
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.INTERNET" />
+
    <application
         android:label="Placement Preparation"
         android:name="${applicationName}"

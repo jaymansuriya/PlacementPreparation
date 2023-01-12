@@ -1,4 +1,3 @@
-import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:placementprep/utils/colors.dart';
@@ -39,34 +38,9 @@ class AboutUs extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.center,
-                        child: ClayContainer(
-                          height: 75.0,
-                          width: 75.0,
-                          borderRadius: 50,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: CircleAvatar(
-                          radius: 40, // Image radius
-                          backgroundImage: AssetImage("assets/images/logo.png"),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    "Meet Our Team",
-                    style: TextStyle(fontSize: 18),
-                  ),
                   Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(15),
-                    margin: const EdgeInsets.only(top: 10, bottom: 15),
                     decoration: BoxDecoration(
+                      shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.shade400,
@@ -79,10 +53,65 @@ class AboutUs extends StatelessWidget {
                         end: Alignment.bottomCenter,
                         colors: [
                           Colors.white,
+                          Colors.grey.shade300,
+                        ],
+                      ),
+                    ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: CircleAvatar(
+                        radius: 40, // Image radius
+                        backgroundImage: AssetImage("assets/images/logo.png"),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Placement Preparation",
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: kPrimaryBackgroundColor,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5)),
+                        color: kPrimaryBackgroundColor),
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    child: Text(
+                      "Meet Our Team",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(15),
+                    margin: const EdgeInsets.only(top: 0, bottom: 15),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: kPrimaryBackgroundColor),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.white,
                           Colors.grey.shade50,
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     child: Column(
                       children: [
@@ -109,12 +138,28 @@ class AboutUs extends StatelessWidget {
                             ),
                             Expanded(
                               flex: 5,
-                              child: Text(
-                                "Jay Mansuriya (190540107131)",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.blueGrey,
-                                    fontWeight: FontWeight.bold),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Jay Mansuriya (190540107131)  ",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blueGrey,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        launch(
+                                            "https://in.linkedin.com/in/jay-mansuriya");
+                                      },
+                                      child: Image.asset(
+                                        "assets/images/linkedin.png",
+                                        scale: 25,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
                           ],
@@ -178,7 +223,7 @@ class AboutUs extends StatelessWidget {
                             Expanded(
                               flex: 5,
                               child: Text(
-                                "ASWDC, Computer Engineering Department",
+                                "ASWDC, School Of Computer Science",
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.blueGrey,
@@ -212,7 +257,7 @@ class AboutUs extends StatelessWidget {
                             Expanded(
                               flex: 5,
                               child: Text(
-                                "Darshan Institute of Engineering & Technology, Rajkot, Gujarat - INDIA",
+                                "Darshan University, Rajkot, Gujarat - INDIA",
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.blueGrey,
@@ -224,22 +269,28 @@ class AboutUs extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Text(
-                    "About ASWDC",
-                    style: TextStyle(fontSize: 18),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5)),
+                        color: kPrimaryBackgroundColor),
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    child: Text(
+                      "About ASWDC",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(15),
-                    margin: const EdgeInsets.only(top: 10, bottom: 15),
+                    margin: const EdgeInsets.only(top: 0, bottom: 15),
                     decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade400,
-                          //(x,y)
-                          blurRadius: 3,
-                        ),
-                      ],
+                      border: Border.all(color: kPrimaryBackgroundColor),
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -248,21 +299,28 @@ class AboutUs extends StatelessWidget {
                           Colors.grey.shade50,
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     child: Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Image.asset(
-                              "assets/images/ASWDC.png",
-                              scale: 10,
+                            Expanded(
+                              flex: 2,
+                              child: Image.asset(
+                                "assets/images/DU_Logo.png",
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            Image.asset(
-                              "assets/images/DIET_Logo.png",
-                              fit: BoxFit.cover,
-                              scale: 3.5,
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Image.asset(
+                                "assets/images/ASWDC.png",
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ],
                         ),
@@ -285,22 +343,28 @@ class AboutUs extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Text(
-                    "Contact Us",
-                    style: TextStyle(fontSize: 18),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5)),
+                        color: kPrimaryBackgroundColor),
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    child: Text(
+                      "Contact Us",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(15),
-                    margin: const EdgeInsets.only(top: 10, bottom: 15),
+                    margin: const EdgeInsets.only(bottom: 15),
                     decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade400,
-                          //(x,y)
-                          blurRadius: 3,
-                        ),
-                      ],
+                      border: Border.all(color: kPrimaryBackgroundColor),
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -309,7 +373,7 @@ class AboutUs extends StatelessWidget {
                           Colors.grey.shade50,
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     child: Column(
                       children: [
@@ -388,8 +452,8 @@ class AboutUs extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        "\u00a9 2022 Darshan Institute of Engineering & Technology",
+                      const Text(
+                        "\u00a9 2023 Darshan University",
                         style: TextStyle(fontSize: 12),
                       ),
                       Row(
@@ -411,6 +475,13 @@ class AboutUs extends StatelessWidget {
                             ),
                           )
                         ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "Made with ♥️ in India ",
+                        style: TextStyle(fontSize: 12),
                       ),
                     ],
                   ),

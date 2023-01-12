@@ -280,7 +280,7 @@ class _QuizScreenState extends State<QuizScreen>
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
                   child: Align(
-                    alignment: Alignment.topLeft,
+                    alignment: Alignment.topRight,
                     child: GestureDetector(
                       onTap: () {
                         showExitPopup();
