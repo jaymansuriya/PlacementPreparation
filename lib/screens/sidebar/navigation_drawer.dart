@@ -1,4 +1,7 @@
+import 'dart:io' show Platform;
+
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:placementprep/resources/auth_methods.dart';
@@ -148,32 +151,42 @@ class NavigationDrawer extends StatelessWidget {
               onTap: () => share(),
             ),
             ListTile(
-              leading: Icon(Icons.browser_updated_rounded),
-              title: Text(
-                'Check for update',
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey.shade600),
-              ),
-              onTap: () => launch(
-                  'https://play.google.com/store/apps/details?id=com.aswdc.placementpreparation&hl=en&gl=US'),
-            ),
+                leading: Icon(Icons.browser_updated_rounded),
+                title: Text(
+                  'Check for update',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade600),
+                ),
+                onTap: () {
+                  if (Platform.isMacOS) {
+                    print('is a Mac');
+                  } else if (Platform.isAndroid) {
+                    launch(
+                        'https://play.google.com/store/apps/details?id=com.aswdc.placementpreparation&hl=en&gl=US');
+                  }
+                }),
             ListTile(
-              leading: Icon(
-                Icons.star_border_outlined,
-                color: Colors.amber,
-              ),
-              title: Text(
-                'Rate',
-                style: TextStyle(
-                    color: Colors.amber,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14),
-              ),
-              onTap: () => launch(
-                  'https://play.google.com/store/apps/details?id=com.aswdc.placementpreparation&hl=en&gl=US'),
-            ),
+                leading: Icon(
+                  Icons.star_border_outlined,
+                  color: Colors.amber,
+                ),
+                title: Text(
+                  'Rate',
+                  style: TextStyle(
+                      color: Colors.amber,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14),
+                ),
+                onTap: () {
+                  if (Platform.isMacOS) {
+                    print('is a Mac');
+                  } else if (Platform.isAndroid) {
+                    launch(
+                        'https://play.google.com/store/apps/details?id=com.aswdc.placementpreparation&hl=en&gl=US');
+                  }
+                }),
             ListTile(
               leading: Image.asset(
                 "assets/images/about.png",
@@ -230,7 +243,7 @@ class NavigationDrawer extends StatelessWidget {
                         ),
                         btnCancelOnPress: () {},
                         btnOkOnPress: () {
-                          AuthMethods().signOut();
+                          FirebaseAuth.instance.signOut();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const GetStarted()),
